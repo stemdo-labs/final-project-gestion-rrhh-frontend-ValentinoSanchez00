@@ -11,7 +11,7 @@ jobs:
       VERSION_CHART: "0.1.0" # Versión del Chart
       MICROSERVICE: "frontend" # Nombre del microservicio 
   subirCharts:
-    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirCharts.yaml@main
+    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/subirCharts.yaml@main
     with: 
       VERSION_CHART: "0.1.0" # Versión del Chart
       MICROSERVICE: "frontend" # Nombre del microservicio
