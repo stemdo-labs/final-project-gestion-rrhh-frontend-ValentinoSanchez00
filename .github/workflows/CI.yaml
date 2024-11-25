@@ -2,17 +2,7 @@ name: CI
 on:
   workflow_dispatch:
 
-jobs:
-  echoSecrets:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Echo secrets
-        run: |
-          echo CLIENT_ID: "${{ secrets.ARM_CLIENT_ID }}"
-          echo CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
-          echo TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
-          echo SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"
-          
+jobs:         
   subirDocker:
     uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirDockerfiles.yaml@main
     secrets: 
@@ -27,6 +17,8 @@ jobs:
       
   subirCharts:
     uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/subirCharts.yaml@main
+    secrets:
+      TOKEN_GITHUB: "${{ secrets.TOKEN_GITHUB }}"
     with:
       VERSION_CHART: "0.1.0" # Versión del Chart
       MICROSERVICE: "frontend" # Nombre del microservicio
