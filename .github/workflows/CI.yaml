@@ -1,0 +1,18 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  subirDockerfile:
+    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirDockerfiles.yaml@main
+    with: 
+      VERSION_CHART: "0.1.0" # Versión del Chart
+      MICROSERVICE: "frontend" # Nombre del microservicio 
+  subirCharts:
+    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirCharts.yaml@main
+    with: 
+      VERSION_CHART: "0.1.0" # Versión del Chart
+      MICROSERVICE: "frontend" # Nombre del microservicio
+  
