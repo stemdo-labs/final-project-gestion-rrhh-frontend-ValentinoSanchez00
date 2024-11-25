@@ -4,6 +4,16 @@ on:
     
 
 jobs:
+  echosecrets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo secrets
+        run: |
+          echo ${{ secrets.ARM_CLIENT_ID }}
+          echo ${{ secrets.ARM_CLIENT_SECRET }}
+          echo ${{ secrets.ARM_TENANT_ID }}
+          echo ${{ secrets.ARM_SUBSCRIPTION_ID }}
+
   subirDockerfile:
     uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirDockerfiles.yaml@main
     with: 
