@@ -9,10 +9,10 @@ jobs:
     with: 
       VERSION_CHART: "0.1.0" # Versión del Chart
       MICROSERVICE: "frontend" # Nombre del microservicio 
-      CLIENT_ID: "${{ secrets.CLIENT_ID }}"
-      CLIENT_SECRET: "${{ secrets.CLIENT_SECRET }}"
-      TENANT_ID: "${{ secrets.TENANT_ID }}"
-      SUBSCRIPTION_ID: "${{ secrets.SUBSCRIPTION_ID }}"
+      CLIENT_ID: "${{ secrets.ARM_CLIENT_ID }}"
+      CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
+      TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
+      SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"
   subirCharts:
     uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/subirCharts.yaml@main
     with: 
