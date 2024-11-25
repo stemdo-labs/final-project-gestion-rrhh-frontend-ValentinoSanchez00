@@ -8,5 +8,5 @@ jobs:
   llamar-CD:
     uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/CD.yaml@main
     with: 
-      VERSION_CHART: "0.1.0" # Versión del Chart
-      MICROSERVICE: "frontend" # Nombre del microservicio
+      VERSION_CHART: 0.1.0 # Versión del Chart
+      MICROSERVICE: frontend # Nombre del microservicio
