@@ -15,6 +15,7 @@ jobs:
           
   subirDocker:
     uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirDockerfiles.yaml@main
+    secrets: inherit
     with: 
       VERSION_CHART: "0.1.0" # Versión del Chart
       MICROSERVICE: "frontend" # Nombre del microservicio 
