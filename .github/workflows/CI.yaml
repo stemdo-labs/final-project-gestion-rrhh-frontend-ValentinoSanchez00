@@ -1,8 +1,16 @@
 name: CI
 on:
-  push:
-    branches:
-      - develop
+  workflow_call:
+    inputs:
+      VERSION_CHART:
+        type: string
+        description: 'Versión del Chart'
+        required: true
+      MICROSERVICE:
+        type: string
+        description: 'Nombre del microservicio'
+        required: true
+        
 
 jobs:         
   subirDocker:
