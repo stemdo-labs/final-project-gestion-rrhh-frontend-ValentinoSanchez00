@@ -1,0 +1,34 @@
+name: Fllujo principal
+on:
+  workflow_dispatch:
+    inputs:
+      VERSION_CHART:
+        description: 'Versión del Chart'
+        required: true
+      MICROSERVICE:
+        description: 'Nombre del microservicio'
+        required: true
+        default: 'frontend'
+
+jobs:
+  CI:
+    uses: ./.github/workflows/CI.yaml
+    with:
+      VERSION_CHART: ${{ inputs.VERSION_CHART }} # Usar el input VERSION_CHART
+      MICROSERVICE: ${{ inputs.MICROSERVICE }} 
+    secrets: 
+       ARM_CLIENT_ID: "${{ secrets.ARM_CLIENT_ID }}"
+       ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
+       ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
+       ARM_SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"  
+
+  CD:
+    uses: ./.github/workflows/CD.yaml
+    with:
+      VERSION_CHART: ${{ inputs.VERSION_CHART }} # Usar el input VERSION_CHART
+      MICROSERVICE: ${{ inputs.MICROSERVICE }}   # Usar el input MICROSERVICE
+    secrets: 
+       ARM_CLIENT_ID: "${{ secrets.ARM_CLIENT_ID }}"
+       ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
+       ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
+       ARM_SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"
