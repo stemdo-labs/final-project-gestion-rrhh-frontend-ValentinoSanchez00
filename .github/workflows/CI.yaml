@@ -1,22 +1,14 @@
 name: CI
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       VERSION_CHART:
-        type: string
         description: 'Versión del Chart'
         required: true
       MICROSERVICE:
-        type: string
         description: 'Nombre del microservicio'
         required: true
-    secrets: 
-      ARM_CLIENT_ID: "${{ secrets.ARM_CLIENT_ID }}"
-      ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
-      ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
-      ARM_SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"
-      TOKEN_GITHUB: "${{ secrets.TOKEN_GITHUB }}"
-        
+        default: 'frontend'
 
 jobs:         
   subirDocker:
@@ -27,8 +19,8 @@ jobs:
        ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
        ARM_SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"
     with: 
-      VERSION_CHART: "${{ inputs.VERSION_CHART }}" # Versión del Char
-      MICROSERVICE: "${{ inputs.MICROSERVICE }} " # Nombre del microservicio 
+      VERSION_CHART: "${{ inputs.VERSION_CHART }}" # Versión del Chart
+      MICROSERVICE: "${{ inputs.MICROSERVICE }}" # Nombre del microservicio 
      
       
   subirCharts:
@@ -37,5 +29,6 @@ jobs:
       TOKEN_GITHUB: "${{ secrets.TOKEN_GITHUB }}"
       HARBOR_PASSWORD: "${{ secrets.HARBOR_PASSWORD }}"
     with:
-      VERSION_CHART: "0.1.0" # Versión del Chart
-      MICROSERVICE: "frontend" # Nombre del microservicio
+      VERSION_CHART: "${{ inputs.VERSION_CHART }}" # Versión del Chart
+      MICROSERVICE: "${{ inputs.MICROSERVICE }}" # Nombre del microservicio
+

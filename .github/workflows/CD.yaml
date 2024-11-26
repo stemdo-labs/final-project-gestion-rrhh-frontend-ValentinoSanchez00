@@ -1,23 +1,14 @@
 name: CD
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       VERSION_CHART:
-        type: string
         description: 'Versión del Chart'
         required: true
       MICROSERVICE:
-        type: string
         description: 'Nombre del microservicio'
         required: true
         default: 'frontend'
-    secrets: 
-      ARM_CLIENT_ID: "${{ secrets.ARM_CLIENT_ID }}"
-      ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
-      ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
-      ARM_SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"
-      HARBOR_PASSWORD: "${{ secrets.HARBOR_PASSWORD }}"
-     
 
 jobs:
   deploy:
