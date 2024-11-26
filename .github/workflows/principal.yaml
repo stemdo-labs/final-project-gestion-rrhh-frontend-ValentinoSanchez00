@@ -11,7 +11,7 @@ on:
         default: 'frontend'
 
 jobs:
-  deploy:
+  CD:
     runs-on: runner-stemdo-labs
     steps:
       - name: Install Azure

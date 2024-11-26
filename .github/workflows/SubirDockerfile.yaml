@@ -1,4 +1,4 @@
-name: CI
+name: Subir Dockerfile
 on:
   workflow_dispatch:
     inputs:
@@ -18,12 +18,6 @@ jobs:
     with:  
       MICROSERVICE: "${{ inputs.MICROSERVICE }}" # Nombre del microservicio 
      
-      
-  subirCharts:
-    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/subirCharts.yaml@develop
-    secrets:
-      TOKEN_GITHUB: "${{ secrets.TOKEN_GITHUB }}"
-      HARBOR_PASSWORD: "${{ secrets.HARBOR_PASSWORD }}"
-    with:
-      MICROSERVICE: "${{ inputs.MICROSERVICE }}" # Nombre del microservicio
+    
+    
 
