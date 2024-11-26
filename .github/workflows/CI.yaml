@@ -1,10 +1,12 @@
 name: CI
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - develop
 
 jobs:         
   subirDocker:
-    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirDockerfiles.yaml@main
+    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirDockerfiles.yaml@develop
     secrets: 
        ARM_CLIENT_ID: "${{ secrets.ARM_CLIENT_ID }}"
        ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
@@ -16,7 +18,7 @@ jobs:
      
       
   subirCharts:
-    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/subirCharts.yaml@main
+    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/subirCharts.yaml@develop
     secrets:
       TOKEN_GITHUB: "${{ secrets.TOKEN_GITHUB }}"
     with:
