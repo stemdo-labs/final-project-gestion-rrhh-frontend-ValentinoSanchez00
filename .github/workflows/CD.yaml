@@ -66,9 +66,18 @@ jobs:
         run: |
           kubectl create namespace actions-runner-system || true
 
-      - name : secreto
+      - name: Crear secreto si no existe
         run: |
-          kubectl create secret docker-registry acr-secret --docker-server=containerregistryvsanchez.azurecr.io --docker-username=${{ secrets.ARM_CLIENT_ID }} --docker-password=${{ secrets.ARM_CLIENT_SECRET }} -n actions-runner-system
+          if ! kubectl get secret acr-secret -n actions-runner-system &>/dev/null; then
+            kubectl create secret docker-registry acr-secret \
+              --docker-server=containerregistryvsanchez.azurecr.io \
+              --docker-username=${{ secrets.ARM_CLIENT_ID }} \
+              --docker-password=${{ secrets.ARM_CLIENT_SECRET }} \
+              -n actions-runner-system
+            echo "Secreto creado exitosamente."
+          else
+            echo "El secreto acr-secret ya existe. Skipping..."
+          fi
 
       - name: Desempaquetar el chart
         run: |
