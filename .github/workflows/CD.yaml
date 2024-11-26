@@ -27,6 +27,12 @@ jobs:
               "tenantId": "${{ secrets.ARM_TENANT_ID }}",
               "subscriptionId": "${{ secrets.ARM_SUBSCRIPTION_ID }}"
             }
+      
+      - name: Install Helm
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh
 
       - name: Azure Container Registry Login
         uses: docker/login-action@v3
@@ -34,13 +40,7 @@ jobs:
           registry: containerregistryvsanchez.azurecr.io
           username: ${{ secrets.ARM_CLIENT_ID }}
           password: ${{ secrets.ARM_CLIENT_SECRET }}
-
-
-      - name: Desplegar imagen
-        run: |
-          docker build -t containerregistry.azurecr.io/imagen-proyecto-${{ inputs.MICROSERVICE }}:latest.
-
-
+          
       - name: Descargar del harbor el chart
         env:
           HARBOR_PASSWORD: ${{ secrets.HARBOR_PASSWORD }}
@@ -48,4 +48,33 @@ jobs:
           VERSION_CHART: ${{ inputs.VERSION_CHART }}
         run: |
           helm registry login -u vsanchez -p $HARBOR_PASSWORD harbor.codeops.es
-          sudo helm pull ${NAME_CHART}-${VERSION_CHART}.tgz oci://harbor.codeops.es/vsanchez
+          helm pull oci://harbor.codeops.es/vsanchez/${NAME_CHART}
+
+      
+      - name: Credenciales cluster
+        run: |
+          az aks get-credentials --resource-group rg-vsanchez-dvfinlab --name clustervsanchez
+
+      - name: Instalar kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+
+      
+      - name: Crear Namespace
+        run: |
+          kubectl create namespace actions-runner-system || true
+
+      - name : secreto
+        run: |
+          kubectl create secret docker-registry acr-secret --docker-server=containerregistryvsanchez.azurecr.io --docker-username=${{ secrets.ARM_CLIENT_ID }} --docker-password=${{ secrets.ARM_CLIENT_SECRET }} -n actions-runner-system
+
+      - name: Desempaquetar el chart
+        run: |
+          helm install ${NAME_CHART}-${VERSION_CHART} ${NAME_CHART}-${VERSION_CHART}.tgz --namespace actions-runner-system
+        env:
+          NAME_CHART: chart-${{ inputs.MICROSERVICE }}
+          VERSION_CHART: ${{ inputs.VERSION_CHART }}
+
+
