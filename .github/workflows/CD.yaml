@@ -1,0 +1,48 @@
+name: CD
+on:
+  workflow_dispatch:
+    inputs:
+      VERSION_CHART:
+        description: 'Versión del Chart'
+        required: true
+      MICROSERVICE:
+        description: 'Nombre del microservicio'
+        required: true
+        default: 'frontend'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: |
+            {
+              "clientId": "${{ secrets.ARM_CLIENT_ID }}",
+              "clientSecret": "${{ secrets.ARM_CLIENT_SECRET }}",
+              "tenantId": "${{ secrets.ARM_TENANT_ID }}",
+              "subscriptionId": "${{ secrets.ARM_SUBSCRIPTION_ID }}"
+            }
+
+      - name: Azure Container Registry Login
+        uses: docker/login-action@v3
+        with:
+          registry: containerregistry.azurecr.io
+          username: ${{ secrets.ARM_CLIENT_ID }}
+          password: ${{ secrets.ARM_CLIENT_SECRET }}
+
+
+      - name: Desplegar imagen
+        run: |
+          docker build -t containerregistry.azurecr.io/imagen-proyecto-${{ inputs.MICROSERVICE }}:${{ inputs.VERSION_CHART }} .
+
+
+      - name: Descargar del harbor el chart
+        env:
+          HARBOR_PASSWORD: ${{ secrets.HARBOR_PASSWORD }}
+          NAME_CHART: chart-${{ inputs.MICROSERVICE }}
+          VERSION_CHART: ${{ inputs.VERSION_CHART }}
+        run: |
+          helm registry login -u vsanchez -p $HARBOR_PASSWORD harbor.codeops.es
+          sudo helm pull ${NAME_CHART}-${VERSION_CHART}.tgz oci://harbor.codeops.es/vsanchez
