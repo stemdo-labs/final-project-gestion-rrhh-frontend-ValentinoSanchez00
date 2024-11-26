@@ -38,7 +38,7 @@ jobs:
 
       - name: Desplegar imagen
         run: |
-          docker build -t containerregistry.azurecr.io/imagen-proyecto-${{ inputs.MICROSERVICE }}:${{ inputs.VERSION_CHART }} .
+          docker build -t containerregistry.azurecr.io/imagen-proyecto-${{ inputs.MICROSERVICE }}:latest.
 
 
       - name: Descargar del harbor el chart
