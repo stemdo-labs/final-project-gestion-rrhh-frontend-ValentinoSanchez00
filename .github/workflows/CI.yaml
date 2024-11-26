@@ -22,5 +22,5 @@ jobs:
     secrets:
       TOKEN_GITHUB: "${{ secrets.TOKEN_GITHUB }}"
     with:
-      VERSION_CHART: "0.1.0" # Versión del Char
+      VERSION_CHART: "0.1.0" # Versión del Chart
       MICROSERVICE: "frontend" # Nombre del microservicio
