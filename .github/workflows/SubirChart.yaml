@@ -8,7 +8,7 @@ on:
         default: 'frontend'
 jobs:
   subirCharts:
-    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/subirCharts.yaml@develop
+    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirCharts.yaml@main
     secrets:
       TOKEN_GITHUB: "${{ secrets.TOKEN_GITHUB }}"
       HARBOR_PASSWORD: "${{ secrets.HARBOR_PASSWORD }}"
