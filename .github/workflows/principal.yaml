@@ -69,6 +69,19 @@ jobs:
           az account set --subscription 86f76907-b9d5-46fa-a39d-aff8432a1868
           az aks get-credentials --resource-group final-project-common --name aksbootcampwe01 --overwrite-existing
           kubelogin convert-kubeconfig -l azurecli
+
+      - name: Crear secreto si no existe
+        run: |
+          if ! kubectl get secret acr-secret -n ns-vsanchez &>/dev/null; then
+            kubectl create secret docker-registry acr-secret \
+              --docker-server=containerregistryvsanchez.azurecr.io \
+              --docker-username=${{ secrets.ARM_CLIENT_ID }} \
+              --docker-password=${{ secrets.ARM_CLIENT_SECRET }} \
+              --namespace=ns-vsanchez
+            echo "Secreto creado exitosamente."
+          else
+            echo "El secreto acr-secret ya existe. Skipping..."
+          fi
       
       - name: ls
         run: |
