@@ -1,7 +1,7 @@
 
 frontend:
   replicas: 2
-  image: containerregistryvsanchez.azurecr.io/imagen-proyecto-frontend:0.1.1
+  image: containerregistryvsanchez.azurecr.io/imagen-proyecto-frontend:0.1.2
   containerPort: 80
   resources:
     requests:
