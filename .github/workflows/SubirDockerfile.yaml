@@ -9,7 +9,7 @@ on:
 
 jobs:         
   subirDocker:
-    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirDockerfiles.yaml@develop
+    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirDockerfiles.yaml@main
     secrets: 
        ARM_CLIENT_ID: "${{ secrets.ARM_CLIENT_ID }}"
        ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
