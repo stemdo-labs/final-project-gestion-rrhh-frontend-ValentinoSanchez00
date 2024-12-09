@@ -24,7 +24,7 @@ jobs:
     environment:
       name: production
     steps:
-      - name: Ejecutar flujo reutilizable
+      - name: Ejecutar flujo cd
         uses: ./.github/workflows/principal.yaml
         with:
           MICROSERVICE: "frontend"
