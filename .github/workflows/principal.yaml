@@ -11,6 +11,10 @@ on:
         description: 'Nombre del microservicio'
         required: true
         default: 'frontend'
+      ENVIROMENT:
+        type: string
+        description: 'Entorno'
+        required: true
     secrets:
       ARM_CLIENT_ID:
         description: 'ID del cliente de Azure'
