@@ -11,6 +11,19 @@ on:
         description: 'Nombre del microservicio'
         required: true
         default: 'frontend'
+    secrets:
+      ARM_CLIENT_ID:
+        description: 'ID del cliente de Azure'
+        required: true
+      ARM_CLIENT_SECRET:
+        description: 'Secret del cliente de Azure'
+        required: true
+      ARM_TENANT_ID:
+        description: 'ID del tenant de Azure'
+        required: true
+      ARM_SUBSCRIPTION_ID:
+        description: 'ID de la suscripción de Azure'
+        required: true
 
 jobs:
   deploy:
