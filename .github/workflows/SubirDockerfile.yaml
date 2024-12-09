@@ -1,11 +1,8 @@
 name: Subir Dockerfile
 on:
-  workflow_dispatch:
-    inputs:
-      MICROSERVICE:
-        description: 'Nombre del microservicio'
-        required: true
-        default: 'frontend'
+ push:
+   branches:
+     - main
 
 jobs:         
   subirDocker:
@@ -16,7 +13,7 @@ jobs:
        ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
        ARM_SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"
     with:  
-      MICROSERVICE: "${{ inputs.MICROSERVICE }}" # Nombre del microservicio 
+      MICROSERVICE: "frontend" # Nombre del microservicio 
      
     
     
