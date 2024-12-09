@@ -4,41 +4,23 @@ on:
   push:
     branches:
       - main
-
+env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 jobs:
   subirDocker:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Subir Docker
-        uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirDockerfiles.yaml@main
-        with:
-          MICROSERVICE: "frontend"
-          ENVIROMENT: ${{ github.ref == 'refs/heads/main' && 'production' || 'develop' }}
-        env:
-          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirDockerfiles.yaml@main
+    with:
+      MICROSERVICE: "frontend"
+      ENVIROMENT: ${{ github.ref == 'refs/heads/main' && 'production' || 'develop' }}
+    
 
   flujoCD:
-    runs-on: ubuntu-latest
     needs: subirDocker
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Implementar flujo CD
-        uses: ./.github/workflows/principal.yaml
-        with:
-          MICROSERVICE: "frontend"
-          VERSION_CHART: "0.2.1"
-          ENVIROMENT: ${{ github.ref == 'refs/heads/main' && 'production' || 'develop' }}
-        env:
-          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          HARBOR_PASSWORD: ${{ secrets.HARBOR_PASSWORD }}
+    uses: ./.github/workflows/principal.yaml
+    with:
+      MICROSERVICE: "frontend"
+      VERSION_CHART: "0.2.1"
+      ENVIROMENT: ${{ github.ref == 'refs/heads/main' && 'production' || 'develop' }}
