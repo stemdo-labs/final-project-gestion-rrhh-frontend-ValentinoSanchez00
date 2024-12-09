@@ -14,6 +14,7 @@ jobs:
        ARM_SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"
     with:  
       MICROSERVICE: "frontend" 
+      ENVIROMENT: ${{ github.ref == 'refs/heads/main' && 'production' || 'develop' }}
   flujoCD:
     needs: subirDocker
     uses: ./.github/workflows/principal.yaml
@@ -26,6 +27,8 @@ jobs:
     with:  
       MICROSERVICE: "frontend" 
       VERSION_CHART: "0.2.1"
+      ENVIROMENT: ${{ github.ref == 'refs/heads/main' && 'production' || 'develop' }}
+    
 
      
     
