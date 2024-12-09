@@ -24,6 +24,9 @@ on:
       ARM_SUBSCRIPTION_ID:
         description: 'ID de la suscripción de Azure'
         required: true
+      HARBOR_PASSWORD:
+        description: 'Contraseña del harbor'
+        required: true
 
 jobs:
   deploy:
