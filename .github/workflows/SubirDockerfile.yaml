@@ -11,10 +11,4 @@ jobs:
       MICROSERVICE: "frontend"
     secrets: inherit
 
-  realizarCD:
-    needs: subirDocker
-    uses: ./.github/workflows/principal.yaml
-    with:
-      MICROSERVICE: "frontend"
-      VERSION_CHART: "0.2.1"
-    secrets: inherit
+
