@@ -1,23 +1,36 @@
 name: Subir Dockerfile
 on:
-  workflow_dispatch:
-    inputs:
-      MICROSERVICE:
-        description: 'Nombre del microservicio'
-        required: true
-        default: 'frontend'
+  push:
+    branches:
+      - main
 
 jobs:         
   subirDocker:
-    uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirDockerfiles.yaml@main
-    secrets: 
-       ARM_CLIENT_ID: "${{ secrets.ARM_CLIENT_ID }}"
-       ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
-       ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
-       ARM_SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"
-    with:  
-      MICROSERVICE: "${{ inputs.MICROSERVICE }}" # Nombre del microservicio 
-     
-    
-    
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - name: Ejecutar flujo reutilizable
+        uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirDockerfiles.yaml@main
+        with:
+          MICROSERVICE: "frontend"
+        env:
+          ARM_CLIENT_ID: "${{ secrets.ARM_CLIENT_ID }}"
+          ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
+          ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
+          ARM_SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"
+  relizarCD:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - name: Ejecutar flujo reutilizable
+        uses: ./.github/workflows/principal.yaml
+        with:
+          MICROSERVICE: "frontend"
+          VERSION_CHART: "0.2.1"
+        env:
+          ARM_CLIENT_ID: "${{ secrets.ARM_CLIENT_ID }}"
+          ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
+          ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
 
