@@ -26,7 +26,7 @@ export default function ListadoEmpleados() {
   return (
     <div className="container">
         <div className="container text-center" style={{margin: "30px"}}>
-            <h3>Cajas Cabron</h3>
+            <h3>Listado de Empleados</h3>
         </div>
 
         <table className="table table-striped table-hover align-middle">
