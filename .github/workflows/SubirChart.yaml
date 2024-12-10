@@ -15,6 +15,10 @@ jobs:
     secrets:
       TOKEN_GITHUB: "${{ secrets.TOKEN_GITHUB }}"
       HARBOR_PASSWORD: "${{ secrets.HARBOR_PASSWORD }}"
+      ARM_CLIENT_ID: "${{ secrets.ARM_CLIENT_ID }}"
+      ARM_CLIENT_SECRET: "${{ secrets.ARM_CLIENT_SECRET }}"
+      ARM_TENANT_ID: "${{ secrets.ARM_TENANT_ID }}"
+      ARM_SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"
     with:
       MICROSERVICE: "${{ inputs.MICROSERVICE }}"
       VERSION_CHART: "${{ inputs.VERSION_CHART }}"
