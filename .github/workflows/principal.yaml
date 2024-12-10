@@ -1,4 +1,4 @@
-name: CD
+name: CD 
 on:
   workflow_call:
     inputs:
@@ -34,6 +34,7 @@ on:
 
 jobs:
   deploy:
+    environment: ${{ inputs.ENVIROMENT }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 
