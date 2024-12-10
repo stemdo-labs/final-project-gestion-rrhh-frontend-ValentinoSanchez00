@@ -11,7 +11,6 @@ jobs:
     uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirDockerfiles.yaml@main
     with:
       MICROSERVICE: "frontend"
-      ENVIROMENT: ${{ github.ref == 'refs/heads/main' && 'production' || 'develop' }}
       DB_HOST: ${{ vars.DB_HOST }}
       DB_PORT: ${{ vars.DB_PORT }}
     secrets:
