@@ -6,9 +6,6 @@ on:
         description: 'Nombre del microservicio'
         required: true
         default: 'frontend'
-      VERSION_CHART:
-        description: 'Versión del Chart'
-        required: true
 jobs:
   subirCharts:
     uses: stemdo-labs/final-project-exercise-ValentinoSanchez00/.github/workflows/SubirCharts.yaml@main
@@ -21,4 +18,4 @@ jobs:
       ARM_SUBSCRIPTION_ID: "${{ secrets.ARM_SUBSCRIPTION_ID }}"
     with:
       MICROSERVICE: "${{ inputs.MICROSERVICE }}"
-      VERSION_CHART: "${{ inputs.VERSION_CHART }}"
+
