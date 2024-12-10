@@ -1,4 +1,4 @@
-name: Subir Dockerfile
+name: Subir Dockerfiles
 
 on:
   push:
