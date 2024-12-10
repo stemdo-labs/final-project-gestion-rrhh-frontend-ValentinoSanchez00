@@ -65,15 +65,26 @@ jobs:
           username: ${{ secrets.ARM_CLIENT_ID }}
           password: ${{ secrets.ARM_CLIENT_SECRET }}
           
-      - name: Descargar del harbor el chart
+      # - name: Descargar del harbor el chart
+      #   env:
+      #     HARBOR_PASSWORD: ${{ secrets.HARBOR_PASSWORD }}
+      #     NAME_CHART: chart-${{ inputs.MICROSERVICE }}
+      #     VERSION_CHART: ${{ inputs.VERSION_CHART }}
+      #   run: |
+      #     echo "URL: oci://harbor.codeops.es/vsanchez/${NAME_CHART}:${VERSION_CHART}"
+      #     helm registry login -u vsanchez -p $HARBOR_PASSWORD harbor.codeops.es
+      #     helm pull oci://harbor.codeops.es/vsanchez/${NAME_CHART} --version ${VERSION_CHART}
+      
+      - name: Descargar del ACR el chart
         env:
-          HARBOR_PASSWORD: ${{ secrets.HARBOR_PASSWORD }}
+          ACR_PASSWORD: ${{ secrets.ARM_CLIENT_SECRET }}
           NAME_CHART: chart-${{ inputs.MICROSERVICE }}
           VERSION_CHART: ${{ inputs.VERSION_CHART }}
         run: |
-          echo "URL: oci://harbor.codeops.es/vsanchez/${NAME_CHART}:${VERSION_CHART}"
-          helm registry login -u vsanchez -p $HARBOR_PASSWORD harbor.codeops.es
-          helm pull oci://harbor.codeops.es/vsanchez/${NAME_CHART} --version ${VERSION_CHART}
+          echo "URL: oci://containerregistryvsanchez.azurecr.io/${NAME_CHART}:${VERSION_CHART}"
+          helm registry login -u ${{ secrets.ARM_CLIENT_ID }} -p $ACR_PASSWORD containerregistryvsanchez.azurecr.io
+          helm pull oci://containerregistryvsanchez.azurecr.io/${NAME_CHART} --version ${VERSION_CHART}
+
 
       - name: Instalar kubectl
         run: |
@@ -110,10 +121,18 @@ jobs:
           ls 
 
       - name: Desempaquetar el chart
+        if: inputs.ENVIROMENT == 'develop'
         run: |
-          helm upgrade --install ${NAME_CHART}-${VERSION_CHART} ${NAME_CHART}-${VERSION_CHART}.tgz --namespace ns-vsanchez -f values.yaml
+          helm upgrade --install develop ${NAME_CHART}-${VERSION_CHART}.tgz --namespace ns-vsanchez -f values.yaml
         env:
           NAME_CHART: chart-${{ inputs.MICROSERVICE }}
           VERSION_CHART: ${{ inputs.VERSION_CHART }}
 
+      - name: Desempaquetar el chart
+        if: inputs.ENVIROMENT == 'production'
+        run: |
+          helm upgrade --install production ${NAME_CHART}-${VERSION_CHART}.tgz --namespace ns-vsanchez -f values.yaml
+        env:
+          NAME_CHART: chart-${{ inputs.MICROSERVICE }}
+          VERSION_CHART: ${{ inputs.VERSION_CHART }}
 
