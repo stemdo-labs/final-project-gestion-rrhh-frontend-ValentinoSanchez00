@@ -6,19 +6,19 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    http:
+  - http:
       paths:
       - path: /dev-vsanchez
         pathType: Prefix
         backend:
           service:
-            name: frontend-development
+            name: frontend-develop-svc
             port:
               number: 80
       - path: /prod-vsanchez
         pathType: Prefix
         backend:
           service:
-            name: frontend-production
+            name: frontend-production-svc
             port:
               number: 80
