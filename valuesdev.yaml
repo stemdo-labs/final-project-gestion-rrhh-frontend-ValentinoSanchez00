@@ -12,12 +12,5 @@ frontend:
       cpu: "500m"
   service:
     port: 80
-    type: LoadBalancer
+    type: ClusterIp
 
-ingress:
-  enabled: false
-  host: frontend
-  annotations:
-    path: /
-  tls: true
-  tlsSecretName: example-tls-secret

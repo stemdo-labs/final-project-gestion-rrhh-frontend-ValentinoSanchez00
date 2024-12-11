@@ -136,4 +136,9 @@ jobs:
         env:
           NAME_CHART: chart-${{ inputs.MICROSERVICE }}
           VERSION_CHART: ${{ inputs.VERSION_CHART }}
+      
+      - name: crear Ingress si es necesario
+        if: inputs.MICROSERVICE == 'frontend' 
+        run: |
+          kubectl apply -f ingress.yaml
 
