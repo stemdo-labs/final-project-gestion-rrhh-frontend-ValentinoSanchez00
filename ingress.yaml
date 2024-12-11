@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: ingress-vsanchez
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /dev-vsanchez
+    nginx.ingress.kubernetes.io/rewrite-target: /
     
     
 spec:
