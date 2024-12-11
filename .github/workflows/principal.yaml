@@ -124,7 +124,7 @@ jobs:
       - name: Desempaquetar el chart
         if: inputs.ENVIROMENT == 'develop'
         run: |
-          helm upgrade --install develop ${NAME_CHART}-${VERSION_CHART}.tgz --namespace ns-vsanchez -f valuesdev.yaml
+          helm upgrade --install frontend-develop ${NAME_CHART}-${VERSION_CHART}.tgz --namespace ns-vsanchez -f valuesdev.yaml
         env:
           NAME_CHART: chart-${{ inputs.MICROSERVICE }}
           VERSION_CHART: ${{ inputs.VERSION_CHART }}
@@ -132,7 +132,7 @@ jobs:
       - name: Desempaquetar el chart
         if: inputs.ENVIROMENT == 'production'
         run: |
-          helm upgrade --install production ${NAME_CHART}-${VERSION_CHART}.tgz --namespace ns-vsanchez -f valuesprod.yaml
+          helm upgrade --install frontend-production ${NAME_CHART}-${VERSION_CHART}.tgz --namespace ns-vsanchez -f valuesprod.yaml
         env:
           NAME_CHART: chart-${{ inputs.MICROSERVICE }}
           VERSION_CHART: ${{ inputs.VERSION_CHART }}
