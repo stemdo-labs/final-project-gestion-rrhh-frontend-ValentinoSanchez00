@@ -1,24 +1,25 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress
+  name: frontend-ingress
   annotations:
-    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - http:
-        paths:
-          - path: /dev
-            pathType: Prefix
-            backend:
-              service:
-                name: frontend-develop-svc
-                port:
-                  number: 80
-          - path: /prod
-            pathType: Prefix
-            backend:
-              service:
-                name: frontend-production-svc
-                port:
-                  number: 80
+  - host: 4.158.94.161
+    http:
+      paths:
+      - path: /dev-vsanchez
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-development
+            port:
+              number: 80
+      - path: /prod-vsanchez
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-production
+            port:
+              number: 80
