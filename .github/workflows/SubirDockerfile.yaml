@@ -1,4 +1,4 @@
-name: Subir Dockerfile
+name: Subir Dockerfiles
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
     uses: ./.github/workflows/principal.yaml
     with:
       MICROSERVICE: "frontend"
-      VERSION_CHART: "1.0.0"
+      VERSION_CHART: "1.0.1"
       ENVIROMENT: ${{ github.ref == 'refs/heads/main' && 'production' || 'develop' }}
     secrets:
       ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}

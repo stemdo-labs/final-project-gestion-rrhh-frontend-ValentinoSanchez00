@@ -140,5 +140,5 @@ jobs:
       - name: crear Ingress si es necesario
         if: inputs.MICROSERVICE == 'frontend' 
         run: |
-          kubectl apply -f ingress.yaml
+          kubectl apply -f ingress.yaml --namespace ns-vsanchez
 
