@@ -12,5 +12,5 @@ frontend:
       cpu: "500m"
   service:
     port: 80
-    type: LoadBalancer
+    type: ClusterIP
 
