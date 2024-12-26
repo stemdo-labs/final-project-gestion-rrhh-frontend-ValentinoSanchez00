@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        APIKEY = credentials('IBM_CLOUD_API_KEY') // Define la credencial en Jenkins previamente
+        APIKEY = credentials('IBM_CLOUD_API_KEY_VSANCHEZ') // Define la credencial en Jenkins previamente
     }
     parameters {
         string(name: 'MICROSERVICE', defaultValue: 'frontend', description: 'Nombre del microservicio (frontend/backend)')
