@@ -7,6 +7,8 @@ pipeline {
         stage('Build') {
             when {
                 changeset "**/package.json"
+                changeset "**/Dockerfile"
+                changeset "**/webhookDockerfile"
             }
             steps {
                 echo "Solo construyo si hay cambios en mi carpeta"
