@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+    triggers {
+        pollSCM('')
+    }
+    stages {
+        stage('Build') {
+            when {
+                changeset "**/src/**"
+            }
+            steps {
+                echo "Solo construyo si hay cambios en mi carpeta"
+                
+            }
+        }
+    }
+}
