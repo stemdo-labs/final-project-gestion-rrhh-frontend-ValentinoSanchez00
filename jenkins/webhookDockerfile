@@ -38,7 +38,7 @@ pipeline {
                     currentBuild.changeSets.any { cs ->
                         cs.items.any { item ->
                             item.affectedFiles.any { file ->
-                                file.path.endsWith('pom.xml') ||
+                                file.path.endsWith('package.json') ||
                                 file.path.endsWith('Dockerfile') ||
                                 file.path.endsWith('jenkins/webhookDockerfile')
                             }
