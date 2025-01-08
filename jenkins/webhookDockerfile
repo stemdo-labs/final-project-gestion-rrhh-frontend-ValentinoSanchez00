@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+    environment {
+        MICROSERVICE = 'frontend'
+        ENVIRONMENT = ''
+        BRANCH_NAME = ''
+    }
+    stages {
+        stage('Determine Branch from Webhook') {
+            steps {
+                script {
+                    if (env.GIT_BRANCH) {
+                        BRANCH_NAME = env.GIT_BRANCH.replace('refs/heads/', '')
+                    } else {
+                        BRANCH_NAME = sh(
+                            script: "git rev-parse --abbrev-ref HEAD",
+                            returnStdout: true
+                        ).trim()
+                    }
+                    echo "Rama detectada: ${BRANCH_NAME}"
+
+                    if (BRANCH_NAME == 'origin/main' || BRANCH_NAME.startsWith('pr')) {
+                        ENVIRONMENT = 'production'
+                    } else if (BRANCH_NAME == 'origin/develop') {
+                        ENVIRONMENT = 'develop'
+                    } else {
+                        error "Push desde rama no soportada: ${BRANCH_NAME}. No se realizará ninguna acción."
+                    }
+
+                    echo "Entorno configurado: ${ENVIRONMENT}"
+                }
+            }
+        }
+        stage('Trigger BuildDockerfile') {
+            when {
+                expression {
+                    
+                    currentBuild.changeSets.any { cs ->
+                        cs.items.any { item ->
+                            item.affectedFiles.any { file ->
+                                file.path.endsWith('package.json') ||
+                                file.path.endsWith('Dockerfile') ||
+                                file.path.endsWith('jenkins/webhookDockerfile')
+                            }
+                        }
+                    } && ENVIRONMENT != ''
+                }
+            }
+            steps {
+                script {
+                    echo "Ejecutando BuildDockerfile con entorno ${ENVIRONMENT}..."
+                    build job: 'BuildDockerfile',
+                    parameters: [
+                        string(name: 'MICROSERVICE', value: MICROSERVICE),
+                        string(name: 'ENVIRONMENT', value: ENVIRONMENT)
+                    ]
+                }
+            }
+        }
+    }
+    post {
+        success {
+            echo "Pipeline ejecutada exitosamente en la rama ${BRANCH_NAME} con entorno ${ENVIRONMENT}."
+        }
+        failure {
+            echo "Error en la ejecución. Revisa la configuración de la rama: ${BRANCH_NAME}."
+        }
+    }
+}

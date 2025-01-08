@@ -1,6 +1,6 @@
 {
   "name": "frontend-rh",
-  "version": "0.2.1",
+  "version": "2.0.6",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
