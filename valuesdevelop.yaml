@@ -1,7 +1,7 @@
 
 frontend:
   replicas: 2
-  image: icr.io/cr-vsanchez/imagen-proyecto-frontend-develop:1.0.1
+  image: icr.io/cr-vsanchez/imagen-proyecto-frontend-develop:1.0.2
   containerPort: 8081
   resources:
     requests:

@@ -12,7 +12,7 @@ COPY . .
 RUN npm run build
  
 # Etapa 2: Producción
-FROM nginx:alpine
+FROM nginxinc/nginx-unprivileged
 # Copiar el build al directorio de Nginx
 COPY --from=build /app/build /usr/share/nginx/html
 # Copiar la configuración personalizada de Nginx
