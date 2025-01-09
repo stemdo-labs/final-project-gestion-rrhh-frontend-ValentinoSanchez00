@@ -2,7 +2,7 @@
 frontend:
   replicas: 2
   image: icr.io/cr-vsanchez/imagen-proyecto-frontend-develop:3.0.0
-  containerPort: 80
+  containerPort: 8081
   resources:
     requests:
       memory: "128Mi"
@@ -11,6 +11,6 @@ frontend:
       memory: "256Mi"
       cpu: "500m"
   service:
-    port: 80
+    port: 8081
     type: ClusterIP
 
