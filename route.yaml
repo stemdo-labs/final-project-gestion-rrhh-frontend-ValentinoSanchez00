@@ -12,20 +12,15 @@ spec:
     targetPort: 8081
   tls:
     termination: edge
-    
----
-apiVersion: route.openshift.io/v1
-kind: Route
-metadata:
-  name: route-production
-  namespace: vsanchez
-spec:
-  path: /
-  to:
-    kind: Service
-    name: frontend-production-svc
-  port:
-    targetPort: 8081
-  tls:
-    termination: edge
-    
+    insecureEdgeTerminationPolicy: Redirect
+
+
+
+
+
+
+
+
+
+
+
